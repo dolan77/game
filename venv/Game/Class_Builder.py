@@ -12,13 +12,10 @@ class Adventurer:
 
 class enemy:
     def __init__(e_stat, e_health, e_attack, e_defense, e_speed):
-        e_stat.e_health = e_health
-        e_stat.e_attack = e_attack
-        e_stat.e_defense = e_defense
-        e_stat.e_speed = e_speed
-
-
-
+        e_stat.health = e_health
+        e_stat.attack = e_attack
+        e_stat.defense = e_defense
+        e_stat.speed = e_speed
 
 
 enemystat = [2,3]
@@ -31,13 +28,15 @@ for x in list:
 adventurer = input('Please choose a class: ')
 
 
-#REPEATING if input is not in the list
+### REPEATING if input is not in the list ###
+
 while adventurer.upper() not in list:
     for x in list:
         print(x.upper())
     adventurer = input("That's not a class, please choose one:")
 
-#Determins name for class you chose
+#### Determins name for class you chose ###
+
 if adventurer.upper() in list:
     if adventurer.upper() == list[0]:
         title = adventurer.upper()
@@ -55,23 +54,27 @@ if adventurer.upper() in list:
 
 
 ### PLAYER AND ENEMIES ###
+
 player = Adventurer(title,random.choice(basestats),random.choice(basestats),random.choice(basestats),random.choice(basestats))
 
 enemy1 = enemy(random.randint(4,5),random.choice(enemystat),random.choice(enemystat),random.choice(enemystat))
 
 ### PLAYER'S HUD ###
+
 def char_display():
 
     display = ('\nTitle: {}\nHP: {} ATK: {} DEF: {} SPD: {}'.format(player.title,player.health,player.attack,player.defense,player.speed))
     print(display)
 
 ### ENEMIES HUD ###
+
 def enemy_display():
 
     e_display = '\nENEMY STATS\nHP: {} ATK: {} DEF: {}\n'.format(enemy1.e_health,enemy1.e_attack,enemy1.e_defense)
     print(e_display)
 
 ### FUNCTION FOR WHEN THE PLAYER DEALS DAMAGE ###
+
 def damage_dealt():
     dealt = player.attack - enemy1.e_defense
 
@@ -83,6 +86,7 @@ def damage_dealt():
         enemy1.e_health = enemy1.e_health - dealt
 
 ### FUNCTION FOR THE DAMAGE THE PLAYER RECEIVES ###
+
 def damage_receive():
     receive = enemy1.e_attack - player.defense
 
