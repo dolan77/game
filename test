@@ -1,0 +1,4 @@
+miles = int(input("Enter the number of miles:"))
+
+gallons = int(input("Enter the number of gallons:"))
+
