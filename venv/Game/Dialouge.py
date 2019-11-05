@@ -1,15 +1,9 @@
-crayu = 'nice'
+ ### CODE TESTING ###
 
-def fri():
-    global crayu
-    re = input()
+import random
 
-    if re == 'test':
+test = 0
+list = [2,3,3,3]
+code = test + random.randrange(-2,2)
 
-        crayu = 1
-
-    else:
-        crayu == 4
-    print(crayu)
-
-fri()
+print(code)

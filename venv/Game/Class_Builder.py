@@ -5,63 +5,57 @@ import os
 ### DEFINES ADVENTURER ###
 
 class Adventurer:
-    def __init__(stat, title, health, attack, defense, speed):
+    def __init__(stat, title, health, attack, defense, speed, level):
         stat.title = title
         stat.health = health
         stat.attack = attack
         stat.defense = defense
         stat.speed = speed
+        stat.level = level
 
 class enemy:
-    def __init__(e_stat, e_health, e_attack, e_defense, e_speed):
-        e_stat.e_health = e_health
-        e_stat.e_attack = e_attack
-        e_stat.e_defense = e_defense
-        e_stat.e_speed = e_speed
+    def __init__(self, name, e_health, e_attack, e_defense, e_speed, level):
+        self.name = name
+        self.e_health = e_health
+        self.e_attack = e_attack
+        self.e_defense = e_defense
+        self.e_speed = e_speed
+        self.level = level
 
 
 ### FUNCTION FOR WHEN THE PLAYER DEALS DAMAGE ###
 def damage_dealt():
-    dealt = player.attack - slime.e_defense
+    dealt = player.attack - enemy_1.e_defense
 
     if dealt <= 0:
-        damage = ('\nThe enemy takes 1 damage')
-        for character in damage:
-            sys.stdout.write(character)
-            sys.stdout.flush()
-        slime.e_health = slime.e_health-1
+        print('\nThe enemy takes 1 damage\n')
+
+        enemy_1.e_health = enemy_1.e_health-1
 
     else:
-        damage2 = ('\nYou deal {} damage'.format(dealt))
-        for character in damage2:
-            sys.stdout.write(character)
-            sys.stdout.flush()
-        slime.e_health = slime.e_health - dealt
+        print('\nYou deal {} damage\n'.format(dealt))
+
+        enemy_1.e_health = enemy_1.e_health - dealt
 
 ### FUNCTION FOR THE DAMAGE THE PLAYER RECEIVES ###
 
 def damage_receive():
-    receive = slime.e_attack - player.defense
+    receive = enemy_1.e_attack - player.defense
 
     if receive <= 0:
-        damage = ('\nYou take 1 damage')
-        for character in damage:
-            sys.stdout.write(character)
-            sys.stdout.flush()
+        print('\nYou take 1 damage')
         player.health = player.health -1
 
     else:
-        damage2 = ('You take {} damage\n'.format(receive))
-        for character in damage2:
-            sys.stdout.write(character)
-            sys.stdout.flush()
+        print('\nYou take {} damage'.format(receive))
+
         player.health = player.health - receive
 
 
 ### BATTLE SEQUENCE ###
 
 def battle():
-    while player.health > 0 and slime.e_health > 0:
+    while player.health > 0 and enemy_1.e_health > 0:
         char_display()
         enemy_display()
 
@@ -73,10 +67,14 @@ def battle():
         if action.upper() == 'ATTACK':
             damage_dealt()
             damage_receive()
-
         else:
             pass
 
+    if player.health <= 0:
+        print('It seems you weren\'t destined to be the savior of this world...')
+    else:
+        print('You\'ve defeated the enemy!')
+        exp_up()
 
 ### INTRO TEXT ###
 
@@ -97,34 +95,34 @@ def intro_text():
 def intro_battle():
     print('So you chose to be a {}, excellent choice my friend!'.format(player.title))
     time.sleep(2)
-    print('Let us test your combat abilities against this slime!')
+    print('Let us test your combat abilities against this enemy!')
     time.sleep(2)
     battle()
 
 ### GLOBAL VARIABLES ###
 
+enemy_list = ['SLIME', 'GOBLIN', 'IMP']
 
-enemystat = [2,3]
+enemy_stat = [1,1]
+
 char_list = ['THIEF', 'HERO', 'TANK', 'BERSERKER']
 
+experience = 0
+
+next_level = 25
 
 ### PLAYER AND ENEMIES ###
-player = Adventurer('Class',5,4,4,4)
-slime = enemy(random.randint(4,5),random.choice(enemystat),random.choice(enemystat),random.choice(enemystat))
+player = Adventurer('Class',10,5,4,5,1)
+enemy_1 = enemy(random.choice(enemy_list),random.randint(4,5),random.choice(enemy_stat),random.choice(enemy_stat),random.choice(enemy_stat),(player.level))
 
-
-### PLAYER'S HUD ###
-
-def char_display():
-
-    display = ('\nTitle: {}\nHP: {} ATK: {} DEF: {} SPD: {}'.format(player.title,player.health,player.attack,player.defense,player.speed))
-    print(display)
+enemy_1 = enemy(random.choice(enemy_list), player.health + random.randrange(-2,2), player.attack - random.randrange(-2,2),
+             player.defense - random.randrange(-2,2), player.speed - random.randrange(-2,2), player.level - random.randrange(-2,2))
 
 ### ENEMIES HUD ###
 
 def enemy_display():
 
-    e_display = '\nENEMY STATS\nHP: {} ATK: {} DEF: {}\n'.format(slime.e_health,slime.e_attack,slime.e_defense)
+    e_display = '\n{}\nLVL: {}\nHP: {} ATK: {} DEF: {}'.format(enemy_1.name,enemy_1.level,enemy_1.e_health,enemy_1.e_attack,enemy_1.e_defense)
     print(e_display)
 
 ### PLAYER'S HUD ###
@@ -134,15 +132,8 @@ def char_display():
     display = ('\nTitle: {}\nHP: {} ATK: {} DEF: {} SPD: {}'.format(player.title,player.health,player.attack,player.defense,player.speed))
     print(display)
 
-### ENEMIES HUD ###
-
-def enemy_display():
-
-    e_display = '\nENEMY STATS\nHP: {} ATK: {} DEF: {}\n'.format(slime.e_health,slime.e_attack,slime.e_defense)
-    print(e_display)
 
 ### CHARACTER SELECTION ###
-
 def char_select():
     global title
     for x in char_list:
@@ -162,11 +153,32 @@ def char_select():
     else:
         player.title = adventurer.upper()
 
+
 ### EXPERIENCE GAIN ###
-def exp():
-   exp_gain = (float(slime.e_health) * 0.5)
-    
-    if exp_gain =
+def exp_up():
+    global experience, next_level
+
+    experience = enemy_1.level * 3
+
+    while experience >= next_level:
+        player.level += 1
+        experience = experience - next_level
+        next_level = round(next_level * 1.5)
+
+        print('\nYou leveled up! All stats are inceased by 2!')
+        player.level = player.level +1
+        player.health = player.health + 2
+        player.attack = player.attack + 2
+        player.defense = player.defense + 2
+        player.speed = player.speed +2
+        print("Here are your new stats! LVL: {} HP: {} ATK: {} DEF: {} SPD: {}".format(player.level,player.health,
+                                                                                       player.attack,player.defense,
+                                                                                       player.speed))
+
+    else:
+        print('You gained {} experience!'.format(experience))
+        print('LVL: {}\nPROGRESS BAR: {}%\nEXP UNTIL NEXT LVL: {}'.format(player.level, int((experience / next_level) * 100),
+                                                                          next_level))
 
 ### ACTUAL CODE ###
 
@@ -174,10 +186,3 @@ intro_text()
 char_select()
 
 intro_battle()
-
-if player.health <= 0:
-    print("\n\nIt seems you weren't the hero we were looking for...")
-
-else:
-    print("\n\nExcellent job! You are the hero!")
-
