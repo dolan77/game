@@ -2,8 +2,20 @@
 
 import random
 
-test = 0
-list = [2,3,3,3]
-code = test + random.randrange(-2,2)
+xp = 100
+level = 1
+nextlvl = 25
+hp = 5
+attack = 3
 
-print(code)
+while xp >= nextlvl:
+    level += 1
+    hp += 5
+    attack += 2
+    nextlvl = round(nextlvl * 1.5)
+
+
+print(level)
+print(nextlvl)
+print(hp)
+print(attack)

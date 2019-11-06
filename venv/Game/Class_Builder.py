@@ -113,10 +113,14 @@ next_level = 25
 
 ### PLAYER AND ENEMIES ###
 player = Adventurer('Class',10,5,4,5,1)
-enemy_1 = enemy(random.choice(enemy_list),random.randint(4,5),random.choice(enemy_stat),random.choice(enemy_stat),random.choice(enemy_stat),(player.level))
+# enemy_1 = enemy(random.choice(enemy_list),random.randint(4,5),random.choice(enemy_stat),random.choice(enemy_stat),random.choice(enemy_stat),(player.level))
 
-enemy_1 = enemy(random.choice(enemy_list), player.health + random.randrange(-2,2), player.attack - random.randrange(-2,2),
-             player.defense - random.randrange(-2,2), player.speed - random.randrange(-2,2), player.level - random.randrange(-2,2))
+enemy_1 = enemy(random.choice(enemy_list),
+            player.health + random.randrange(-2,0),
+            player.attack + random.randrange(-2,0),
+            player.defense + random.randrange(-2,0),
+            player.speed + random.randrange(-2,0),
+            player.level + random.randrange(0,1))
 
 ### ENEMIES HUD ###
 
@@ -165,19 +169,19 @@ def exp_up():
         experience = experience - next_level
         next_level = round(next_level * 1.5)
 
-        print('\nYou leveled up! All stats are inceased by 2!')
-        player.level = player.level +1
-        player.health = player.health + 2
-        player.attack = player.attack + 2
-        player.defense = player.defense + 2
-        player.speed = player.speed +2
-        print("Here are your new stats! LVL: {} HP: {} ATK: {} DEF: {} SPD: {}".format(player.level,player.health,
+        print('\nYou leveled up! All stats are inceased!')
+        player.level += 1
+        player.health += 5
+        player.attack += 2
+        player.defense += 2
+        player.speed += 2
+        print("\nHere are your new stats! LVL: {} HP: {} ATK: {} DEF: {} SPD: {}".format(player.level,player.health,
                                                                                        player.attack,player.defense,
                                                                                        player.speed))
 
     else:
-        print('You gained {} experience!'.format(experience))
-        print('LVL: {}\nPROGRESS BAR: {}%\nEXP UNTIL NEXT LVL: {}'.format(player.level, int((experience / next_level) * 100),
+        print('\nYou gained {} experience!'.format(experience))
+        print('\nLVL: {}\nPROGRESS BAR: {}%\nEXP UNTIL NEXT LVL: {}'.format(player.level, int((experience / next_level) * 100),
                                                                           next_level))
 
 ### ACTUAL CODE ###
@@ -186,3 +190,7 @@ intro_text()
 char_select()
 
 intro_battle()
+
+# IDEA TO SHOW PROGRESS BAR FOR EXP, NOT PERCENTAGE
+# [IIIII   ]
+# [        ]
