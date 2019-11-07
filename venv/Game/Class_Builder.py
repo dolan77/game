@@ -55,6 +55,8 @@ def damage_receive():
 ### BATTLE SEQUENCE ###
 
 def battle():
+    # global e_max_health
+
     while player.health > 0 and enemy_1.e_health > 0:
         char_display()
         enemy_display()
@@ -72,9 +74,16 @@ def battle():
 
     if player.health <= 0:
         print('It seems you weren\'t destined to be the savior of this world...')
+
+    ### IF ENEMY IS DEFEATED, CALL'S THIS ###
     else:
         print('You\'ve defeated the enemy!')
+
         exp_up()
+
+        ### RESETS THE PLAYER AND ENEMIES HEALTH ONCE THE BATTLE IS DONE ###
+        player.health = max_health
+        enemy_1.e_health = e_max_health
 
 ### INTRO TEXT ###
 
@@ -111,16 +120,23 @@ experience = 0
 
 next_level = 25
 
+max_health = 10
+
+e_max_health = max_health + random.randrange(-2,0)
+
 ### PLAYER AND ENEMIES ###
-player = Adventurer('Class',10,5,4,5,1)
+player = Adventurer('Class',max_health,5,4,5,1)
+
 # enemy_1 = enemy(random.choice(enemy_list),random.randint(4,5),random.choice(enemy_stat),random.choice(enemy_stat),random.choice(enemy_stat),(player.level))
 
 enemy_1 = enemy(random.choice(enemy_list),
-            player.health + random.randrange(-2,0),
+            e_max_health,
             player.attack + random.randrange(-2,0),
             player.defense + random.randrange(-2,0),
             player.speed + random.randrange(-2,0),
-            player.level + random.randrange(0,1))
+            10)
+            ### CHANGE 10 LATER, THIS IS TO TEST EXP GAINED IN BATTLE ###
+            # player.level + random.randrange(0,1))
 
 ### ENEMIES HUD ###
 
@@ -160,22 +176,22 @@ def char_select():
 
 ### EXPERIENCE GAIN ###
 def exp_up():
-    global experience, next_level
+    global experience, next_level, max_health
 
     experience = enemy_1.level * 3
 
     while experience >= next_level:
         player.level += 1
-        experience = experience - next_level
+        experience -= next_level
         next_level = round(next_level * 1.5)
 
         print('\nYou leveled up! All stats are inceased!')
         player.level += 1
-        player.health += 5
+        max_health += 5
         player.attack += 2
         player.defense += 2
         player.speed += 2
-        print("\nHere are your new stats! LVL: {} HP: {} ATK: {} DEF: {} SPD: {}".format(player.level,player.health,
+        print("\nHere are your new stats! LVL: {} HP: {} ATK: {} DEF: {} SPD: {}".format(player.level,max_health,
                                                                                        player.attack,player.defense,
                                                                                        player.speed))
 
@@ -191,6 +207,9 @@ char_select()
 
 intro_battle()
 
+#### TESTING FOR WHEN YOU BATTLE ENEMY AGAIN ###
+print('AGAIN')
+battle()
 # IDEA TO SHOW PROGRESS BAR FOR EXP, NOT PERCENTAGE
 # [IIIII   ]
 # [        ]

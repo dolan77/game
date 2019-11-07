@@ -2,20 +2,28 @@
 
 import random
 
-xp = 100
-level = 1
-nextlvl = 25
-hp = 5
-attack = 3
+# xp = 100
+# level = 1
+# nextlvl = 25
+# hp = 5
+# attack = 3
+#
+# while xp >= nextlvl:
+#     level += 1
+#     hp += 5
+#     attack += 2
+#     nextlvl = round(nextlvl * 1.5)
+#
+#
+# print(level)
+# print(nextlvl)
+# print(hp)
+# print(attack)
 
-while xp >= nextlvl:
-    level += 1
-    hp += 5
-    attack += 2
-    nextlvl = round(nextlvl * 1.5)
 
+max_health = 10
 
-print(level)
-print(nextlvl)
-print(hp)
-print(attack)
+player_health = max_health - 5
+
+print(max_health, player_health)
+
