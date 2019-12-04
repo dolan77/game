@@ -2,6 +2,23 @@ import random
 import sys
 import time
 import os
+
+### GLOBAL VARIABLES ###
+
+enemy_list = ['SLIME', 'GOBLIN', 'IMP']
+
+enemy_stat = [1,1]
+
+char_list = ['THIEF', 'HERO', 'TANK', 'BERSERKER']
+
+experience = 0
+
+next_level = 25
+
+max_health = 10
+
+e_max_health = 10
+
 ### DEFINES ADVENTURER ###
 
 class Adventurer:
@@ -23,6 +40,14 @@ class enemy:
         self.level = level
 
 
+def enemy_health():
+    health = player.health + random.randrange(-2, 0)
+
+    return health
+
+
+
+
 ### FUNCTION FOR WHEN THE PLAYER DEALS DAMAGE ###
 def damage_dealt():
     dealt = player.attack - enemy_1.e_defense
@@ -37,6 +62,9 @@ def damage_dealt():
 
         enemy_1.e_health = enemy_1.e_health - dealt
 
+
+
+
 ### FUNCTION FOR THE DAMAGE THE PLAYER RECEIVES ###
 
 def damage_receive():
@@ -50,6 +78,7 @@ def damage_receive():
         print('\nYou take {} damage'.format(receive))
 
         player.health = player.health - receive
+
 
 
 ### BATTLE SEQUENCE ###
@@ -75,6 +104,7 @@ def battle():
     if player.health <= 0:
         print('It seems you weren\'t destined to be the savior of this world...')
 
+
     ### IF ENEMY IS DEFEATED, CALL'S THIS ###
     else:
         print('You\'ve defeated the enemy!')
@@ -83,46 +113,11 @@ def battle():
 
         ### RESETS THE PLAYER AND ENEMIES HEALTH ONCE THE BATTLE IS DONE ###
         player.health = max_health
-        enemy_1.e_health = e_max_health
+        # e_max_health = max_health
+        # enemy_1.e_health = e_max_health + random.randrange(-2,0)
+        enemy_1.e_health = enemy_health()
 
-### INTRO TEXT ###
 
-
-def intro_text():
-    name = input('What is your name adventurer? ')
-    print('{}, what a wonderful name!'.format(name))
-    time.sleep(1)
-    print('You\'ve been summoned into the world of Fravilion, a world full of magic!')
-    time.sleep(1)
-    print('Let\'s make sure you choose a class before you set out on your quest')
-    time.sleep(1)
-    print('Please, choose a class')
-    time.sleep(1)
-
-### INTRO BATTLE SCENE
-
-def intro_battle():
-    print('So you chose to be a {}, excellent choice my friend!'.format(player.title))
-    time.sleep(2)
-    print('Let us test your combat abilities against this enemy!')
-    time.sleep(2)
-    battle()
-
-### GLOBAL VARIABLES ###
-
-enemy_list = ['SLIME', 'GOBLIN', 'IMP']
-
-enemy_stat = [1,1]
-
-char_list = ['THIEF', 'HERO', 'TANK', 'BERSERKER']
-
-experience = 0
-
-next_level = 25
-
-max_health = 10
-
-e_max_health = max_health + random.randrange(-2,0)
 
 ### PLAYER AND ENEMIES ###
 player = Adventurer('Class',max_health,5,4,5,1)
@@ -130,13 +125,14 @@ player = Adventurer('Class',max_health,5,4,5,1)
 # enemy_1 = enemy(random.choice(enemy_list),random.randint(4,5),random.choice(enemy_stat),random.choice(enemy_stat),random.choice(enemy_stat),(player.level))
 
 enemy_1 = enemy(random.choice(enemy_list),
-            e_max_health,
+            enemy_health(),
             player.attack + random.randrange(-2,0),
             player.defense + random.randrange(-2,0),
             player.speed + random.randrange(-2,0),
             10)
             ### CHANGE 10 LATER, THIS IS TO TEST EXP GAINED IN BATTLE ###
             # player.level + random.randrange(0,1))
+
 
 ### ENEMIES HUD ###
 
@@ -145,12 +141,16 @@ def enemy_display():
     e_display = '\n{}\nLVL: {}\nHP: {} ATK: {} DEF: {}'.format(enemy_1.name,enemy_1.level,enemy_1.e_health,enemy_1.e_attack,enemy_1.e_defense)
     print(e_display)
 
+
+
+
 ### PLAYER'S HUD ###
 
 def char_display():
 
     display = ('\nTitle: {}\nHP: {} ATK: {} DEF: {} SPD: {}'.format(player.title,player.health,player.attack,player.defense,player.speed))
     print(display)
+
 
 
 ### CHARACTER SELECTION ###
@@ -172,6 +172,8 @@ def char_select():
             player.title = adventurer.upper()
     else:
         player.title = adventurer.upper()
+
+
 
 
 ### EXPERIENCE GAIN ###
@@ -200,6 +202,35 @@ def exp_up():
         print('\nLVL: {}\nPROGRESS BAR: {}%\nEXP UNTIL NEXT LVL: {}'.format(player.level, int((experience / next_level) * 100),
                                                                           next_level))
 
+
+
+### INTRO TEXT ###
+
+def intro_text():
+    name = input('What is your name adventurer? ')
+    print('{}, what a wonderful name!'.format(name))
+    time.sleep(1)
+    print('You\'ve been summoned into the world of Fravilion, a world full of magic!')
+    time.sleep(1)
+    print('Let\'s make sure you choose a class before you set out on your quest')
+    time.sleep(1)
+    print('Please, choose a class')
+    time.sleep(1)
+
+
+
+### INTRO BATTLE SCENE
+
+def intro_battle():
+    print('So you chose to be a {}, excellent choice my friend!'.format(player.title))
+    time.sleep(2)
+    print('Let us test your combat abilities against this enemy!')
+    time.sleep(2)
+    battle()
+
+
+
+
 ### ACTUAL CODE ###
 
 intro_text()
@@ -209,7 +240,9 @@ intro_battle()
 
 #### TESTING FOR WHEN YOU BATTLE ENEMY AGAIN ###
 print('AGAIN')
+
 battle()
+
 # IDEA TO SHOW PROGRESS BAR FOR EXP, NOT PERCENTAGE
 # [IIIII   ]
 # [        ]

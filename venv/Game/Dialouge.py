@@ -21,9 +21,23 @@ import random
 # print(attack)
 
 
-max_health = 10
+# max_health = 10
+#
+# player_health = max_health - 5
+#
+# def test():
+#     global max_health, player_health
+#
+#     max_health += 5
+#     player_health = max_health
+#     print(player_health)
+#     print(max_health)
+#
+# test()
 
-player_health = max_health - 5
+def test():
+    x = 5
+    return
 
-print(max_health, player_health)
 
+print(test())
