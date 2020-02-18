@@ -35,9 +35,38 @@ import random
 #
 # test()
 
-def test():
-    x = 5
-    return
+# def test():
+#     x = 5
+#     return
+#
+#
+# print(test())
 
+#[IIIIIIIIII]   EACH I represents 10% of exp
 
-print(test())
+#
+# from operator import itemgetter
+#
+#
+# experience = 95
+#
+#
+#
+# exp_bar = ['I','I','I','I','I','I','I','I','I','I']
+#
+# exp_str = ''.join(exp_bar)
+#
+# if 90 <= experience <= 100:
+#     print(exp_str)
+
+# def pass_it(x, y):
+#     z = x , ", " , y
+# num1 = 4
+# num2 = 8
+# answer = pass_it(num1, num2)
+# print(answer)
+
+year = int(input())
+
+if year % 100 == 0:
+    print('leap year')

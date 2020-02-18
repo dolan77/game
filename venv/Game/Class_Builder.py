@@ -204,6 +204,8 @@ def exp_up():
 
 
 
+
+
 ### INTRO TEXT ###
 
 def intro_text():
@@ -245,4 +247,7 @@ battle()
 
 # IDEA TO SHOW PROGRESS BAR FOR EXP, NOT PERCENTAGE
 # [IIIII   ]
-# [        ]
+
+
+
+
