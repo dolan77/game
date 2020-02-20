@@ -19,643 +19,389 @@ O_2 = -1
 
 max = 0
 quality = 0
+user_input = -1
 
-### FUNCTIONS FOR THE CONCENTRATION CONSTANTS ###
-def PM_25_constant(C_p):
+name_list = []
+max_value = []
+PM25_counter = 0
 
-    if PM_25 < 0:
-        pass
-
-    ## GOOD QUALITY ###
-    if 0 <= PM_25 <= 12.0:
-        C_low = 0
-        C_high = 12.0
-        I_low = 0
-        I_high = 50
-        Ip = ((I_high - I_low) / (C_high - C_low)) * (C_p - C_low) + I_low
-        return (round(Ip))
-
-    ## MODERATE QUALITY ###
-    elif 12.1 <= PM_25 <= 35.4:
-        C_low = 12.1
-        C_high = 35.4
-        I_low = 51
-        I_high = 100
-        Ip = ((I_high - I_low) / (C_high - C_low)) * (C_p - C_low) + I_low
-        return (round(Ip))
-
-    ## UNHEALTHY FOR SENSITIVE GROUPS QUALITY ##
-    elif 35.5 <= PM_25 <= 55.4:
-        C_low = 35.5
-        C_high = 55.4
-        I_low = 101
-        I_high = 150
-        Ip = ((I_high - I_low) / (C_high - C_low)) * (C_p - C_low) + I_low
-        return (round(Ip))
-
-    ## UNHEALTHY QUALITY ##
-    elif 55.5 <= PM_25 <= 150.4:
-        C_low = 55.5
-        C_high = 150.4
-        I_low = 151
-        I_high = 200
-        Ip = ((I_high - I_low) / (C_high - C_low)) * (C_p - C_low) + I_low
-        return (round(Ip))
-
-    ## VERY UNHEALTHY QUALITY ##
-    elif 150.5 <= PM_25 <= 250.4:
-        C_low = 150.5
-        C_high = 250.4
-        I_low = 201
-        I_high = 300
-        Ip = ((I_high - I_low) / (C_high - C_low)) * (C_p - C_low) + I_low
-        return (round(Ip))
-
-    ## HAZARDOUS QUALITY ##
-    elif 250.5 <= PM_25 <= 500.4:
-        C_low = 250.5
-        C_high = 500.4
-        I_low = 301
-        I_high = 500
-        Ip = ((I_high - I_low) / (C_high - C_low)) * (C_p - C_low) + I_low
-        return (round(Ip))
-
-def PM_10_constant(C_p):
-
-        ## HAZARDOUS QUALITY ##
-        if 425 <= PM_10 <= 604:
-            C_low = 425
-            C_high = 604
-            I_low = 301
-            I_high = 500
-            Ip = ((I_high - I_low) / (C_high - C_low)) * (C_p - C_low) + I_low
-            return round(Ip)
-
-            ## VERY UNHEALTHY QUALITY ##
-        elif 355 <= PM_10 <= 424:
-            C_low = 355
-            C_high = 424
-            I_low = 201
-            I_high = 300
-            Ip = ((I_high - I_low) / (C_high - C_low)) * (C_p - C_low) + I_low
-            return round(Ip)
-
-            ## UNHEALTHY QUALITY ##
-        elif 255 <= PM_10 <= 354:
-            C_low = 255
-            C_high = 354
-            I_low = 201
-            I_high = 300
-            Ip = ((I_high - I_low) / (C_high - C_low)) * (C_p - C_low) + I_low
-            return round(Ip)
-
-            ## UNHEALTHY FOR SENSITIVE GROUPS QUALITY##
-        elif 155 <= PM_10 <= 254:
-            C_low = 155
-            C_high = 254
-            I_low = 101
-            I_high = 150
-            Ip = ((I_high - I_low) / (C_high - C_low)) * (C_p - C_low) + I_low
-            return round(Ip)
-
-            ## MODERATE QUALITY ##
-        elif 55 <= PM_10 <= 154:
-            C_low = 55
-            C_high = 154
-            I_low = 51
-            I_high = 100
-            Ip = ((I_high - I_low) / (C_high - C_low)) * (C_p - C_low) + I_low
-            return round(Ip)
-
-            ## GOOD QUALITY ##
-        elif 0 <= PM_10 <= 54:
-            C_low = 0
-            C_high = 54
-            I_low = 0
-            I_high = 50
-            Ip = ((I_high - I_low) / (C_high - C_low)) * (C_p - C_low) + I_low
-            return round(Ip)
-
-def NO_2_constant(C_p):
-    ## HAZARDOUS QUALITY ##
-    if 1250 <= NO_2 <= 2049:
-        C_low = 1250
-        C_high = 2049
-        I_low = 301
-        I_high = 500
-        Ip = ((I_high - I_low) / (C_high - C_low)) * (C_p - C_low) + I_low
-        return round(Ip)
-
-        ## VERY UNHEALTHY QUALITY ##
-    elif 650 <= NO_2 <= 1249:
-        C_low = 650
-        C_high = 1249
-        I_low = 201
-        I_high = 300
-        Ip = ((I_high - I_low) / (C_high - C_low)) * (C_p - C_low) + I_low
-        return round(Ip)
-
-        ## UNHEALTHY QUALITY ##
-    elif 361 <= NO_2 <= 649:
-        C_low = 361
-        C_high = 649
-        I_low = 151
-        I_high = 200
-        Ip = ((I_high - I_low) / (C_high - C_low)) * (C_p - C_low) + I_low
-        return round(Ip)
-
-        ## UNHEALTHY FOR SENSITIVE GROUPS QUALITY ##
-    elif 101 <= NO_2 <= 360:
-        C_low = 101
-        C_high = 360
-        I_low = 101
-        I_high = 150
-        Ip = ((I_high - I_low) / (C_high - C_low)) * (C_p - C_low) + I_low
-        return round(Ip)
-
-        ## MODERATE QUALITY ##
-    elif 54 <= NO_2 <= 100:
-        C_low = 54
-        C_high = 100
-        I_low = 51
-        I_high = 100
-        Ip = ((I_high - I_low) / (C_high - C_low)) * (C_p - C_low) + I_low
-        return round(Ip)
-
-        ## GOOD QUALITY ##
-    elif 0 <= NO_2 <= 53:
-        C_low = 0
-        C_high = 53.0
-        I_low = 0
-        I_high = 50
-        Ip = ((I_high - I_low) / (C_high - C_low)) * (C_p - C_low) + I_low
-        return round(Ip)
-
-def SO_constant(C_p):
-
-    ## GOOD QUALITY ##
-    if 0 <= SO <= 35:
-        C_low = 0
-        C_high = 35.0
-        I_low = 0
-        I_high = 50
-        Ip = ((I_high - I_low) / (C_high - C_low)) * (C_p - C_low) + I_low
-        return round(Ip)
-
-    ## MODERATE QUALITY ##
-    elif 36 <= SO <= 75:
-        C_low = 36
-        C_high = 75.0
-        I_low = 51
-        I_high = 100
-        Ip = ((I_high - I_low) / (C_high - C_low)) * (C_p - C_low) + I_low
-        return round(Ip)
-
-    ## UNHEALTHY FOR SENSITIVE GROUPS QUALITY ##
-    elif 76 <= SO <= 185:
-        C_low = 76
-        C_high = 185.0
-        I_low = 101
-        I_high = 150
-        Ip = ((I_high - I_low) / (C_high - C_low)) * (C_p - C_low) + I_low
-        return round(Ip)
-
-    ## UNHEALTHY QUALITY ##
-    elif 186 <= SO <= 304:
-        C_low = 186
-        C_high = 304.0
-        I_low = 151
-        I_high = 200
-        Ip = ((I_high - I_low) / (C_high - C_low)) * (C_p - C_low) + I_low
-        return round(Ip)
-
-    ## VERY UNHEALTHY QUALITY ##
-    elif 305 <= SO <= 604:
-        C_low = 305
-        C_high = 604.0
-        I_low = 201
-        I_high = 300
-        Ip = ((I_high - I_low) / (C_high - C_low)) * (C_p - C_low) + I_low
-        return round(Ip)
-
-    ## HAZARDOUS ##
-    elif 605 <= SO <= 1004:
-        C_low = 605
-        C_high = 1004.0
-        I_low = 301
-        I_high = 500
-        Ip = ((I_high - I_low) / (C_high - C_low)) * (C_p - C_low) + I_low
-        return round(Ip)
-
-def CO_constant(C_p):
-
-    ## GOOD QUALITY ##
-    if 0 <= CO <= 4.4:
-        C_low = 0
-        C_high = 4.4
-        I_low = 0
-        I_high = 50
-        Ip = ((I_high - I_low) / (C_high - C_low)) * (C_p - C_low) + I_low
-        return round(Ip)
-
-    ## MODERATE QUALITY ##
-    elif 4.5 <= CO <= 9.4:
-        C_low = 4.5
-        C_high = 9.4
-        I_low = 51
-        I_high = 100
-        Ip = ((I_high - I_low) / (C_high - C_low)) * (C_p - C_low) + I_low
-        return round(Ip)
-
-    ## UNHEALTHY FOR SENSITIVE GROUPS QUALITY ##
-    elif 9.5 <= CO <= 12.4:
-        C_low = 9.5
-        C_high = 12.4
-        I_low = 101
-        I_high = 150
-        Ip = ((I_high - I_low) / (C_high - C_low)) * (C_p - C_low) + I_low
-        return round(Ip)
-
-    ## UNHEALTHY QUALITY ##
-    elif 12.5 <= CO <= 15.4:
-        C_low = 12.5
-        C_high = 15.4
-        I_low = 151
-        I_high = 200
-        Ip = ((I_high - I_low) / (C_high - C_low)) * (C_p - C_low) + I_low
-        return round(Ip)
-
-    ## VERY UNHEALTHY QUALITY ##
-    elif 15.5 <= CO <= 30.4:
-        C_low = 15.5
-        C_high = 30.4
-        I_low = 201
-        I_high = 300
-        Ip = ((I_high - I_low) / (C_high - C_low)) * (C_p - C_low) + I_low
-        return round(Ip)
-
-    ## HAZARDOUS QUALITY ##
-    elif 30.5 <= CO <= 50.4:
-        C_low = 30.5
-        C_high = 50.4
-        I_low = 301
-        I_high = 500
-        Ip = ((I_high - I_low) / (C_high - C_low)) * (C_p - C_low) + I_low
-        return round(Ip)
-
-def O_3_constant(C_p):
-
-    ## GOOD AND MODERATE QUALITY ##
-    if 0 <= O_3 <= 124:
-        pass
-
-    #UNHEALTHY FOR SENSITIVE GROUPS QUALITY ##
-    elif 125 <= O_3 <= 164:
-        C_low = 125
-        C_high = 164
-        I_low = 101
-        I_high = 150
-        Ip = ((I_high - I_low) / (C_high - C_low)) * (C_p - C_low) + I_low
-        return round(Ip)
-
-    ## UNHEALTHY QUALITY ##
-    elif 165 <= O_3 <= 204:
-        C_low = 165
-        C_high = 204
-        I_low = 151
-        I_high = 200
-        Ip = ((I_high - I_low) / (C_high - C_low)) * (C_p - C_low) + I_low
-        return round(Ip)
-
-    # VERY UNHEALTHY QUALITY ##
-    elif 205 <= O_3 <= 404:
-        C_low = 205
-        C_high = 404
-        I_low = 201
-        I_high = 300
-        Ip = ((I_high - I_low) / (C_high - C_low)) * (C_p - C_low) + I_low
-        return round(Ip)
-
-    ## HAZARDOUS QUALITY ##
-    elif 405 <= O_3 <= 604:
-        C_low = 405
-        C_high = 604
-        I_low = 301
-        I_high = 500
-        Ip = ((I_high - I_low) / (C_high - C_low)) * (C_p - C_low) + I_low
-        return round(Ip)
+        ### THE FORMULA TO SOLVE FOR THE AQI ###
+def formula(C_high, C_low, I_low, I_high, C_p):
+    Ip = ((I_high - I_low) / (C_high - C_low)) * (C_p - C_low) + I_low
+    return (round(Ip))
 
 
-
+### FUNCTION TO SOLVE THE USER'S INPUT OF PM_2.5 CONCENTRATION ###
 def PM_25_calc(C_p):
     global quality
 
     if PM_25 < 0:
-        pass
-        return(-1)
+        return (-1)
 
-        ## GOOD QUALITY ###
+    ## GOOD QUALITY ###
     if 0 <= PM_25 <= 12.0:
         quality = 'Good'
-        return (PM_25_constant(C_p))
+        return (formula(12, 0, 0, 50, C_p))
 
     ## MODERATE QUALITY ###
     elif 12.1 <= PM_25 <= 35.4:
         quality = 'Moderate'
-        return (PM_25_constant(C_p))
+        return (formula(35.4, 12.1, 51, 100, C_p))
 
     ## UNHEALTHY FOR SENSITIVE GROUPS QUALITY ##
     elif 35.5 <= PM_25 <= 55.4:
         quality = 'Unhealthy For Sensitive Groups'
-        return (PM_25_constant(C_p))
+        return (formula(55.4, 35.5, 101, 150, C_p))
 
-        ## UNHEALTHY QUALITY ##
+    ## UNHEALTHY QUALITY ##
     elif 55.5 <= PM_25 <= 150.4:
         quality = 'Unhealthy'
-        return (PM_25_constant(C_p))
+        return (formula(150.4, 55.5, 151, 200, C_p))
 
-        ## VERY UNHEALTHY QUALITY ##
+    ## VERY UNHEALTHY QUALITY ##
     elif 150.5 <= PM_25 <= 250.4:
         quality = 'Very Unhealthy'
-        return (PM_25_constant(C_p))
+        return (formula(250.4, 150.5, 201, 300, C_p))
 
-        ## HAZARDOUS QUALITY ##
+    ## HAZARDOUS QUALITY ##
     elif 250.5 <= PM_25 <= 500.4:
         quality = 'Hazardous'
-        return (PM_25_constant(C_p))
+        return (formula(500.4, 250.5, 301, 500, C_p))
 
+
+### FUNCTION TO SOLVE THE USER'S INPUT OF PM_10 CONCENTRATION ###
 def PM_10_calc(C_p):
     global quality
-
-    if PM_10 < 0:
-        return(-1)
-
-        ## HAZARDOUS QUALITY ##
+    ## HAZARDOUS QUALITY ##
     if 425 <= PM_10 <= 604:
         quality = 'Hazardous'
-        return (PM_10_constant(C_p))
+        return (formula(604, 425, 301, 500, C_p))
 
         ## VERY UNHEALTHY QUALITY ##
     elif 355 <= PM_10 <= 424:
         quality = 'Very Unhealthy'
-        return (PM_10_constant(C_p))
+        return formula(424, 355, 201, 300, C_p)
 
         ## UNHEALTHY QUALITY ##
     elif 255 <= PM_10 <= 354:
         quality = 'Unhealthy'
-        return (PM_10_constant(C_p))
+        return formula(354, 255, 201, 300, C_p)
 
         ## UNHEALTHY FOR SENSITIVE GROUPS QUALITY##
     elif 155 <= PM_10 <= 254:
-        quality = 'Unhealthy For Sensitive Groups'
-        return (PM_10_calc(C_p))
+        quality = 'Unhealthy for Senitive Groups'
+        return formula(254, 155, 101, 150, C_p)
 
         ## MODERATE QUALITY ##
     elif 55 <= PM_10 <= 154:
         quality = 'Moderate'
-        return (PM_10_constant(C_p))
+        return formula(154, 55, 51, 100, C_p)
 
         ## GOOD QUALITY ##
     elif 0 <= PM_10 <= 54:
         quality = 'Good'
-        return (PM_10_constant(C_p))
+        return formula(54, 0, 0, 50, C_p)
 
-def NO_2_calc(C_p):
-
-    global quality
-
-    if NO_2 < 0:
+    elif PM_10 < 0:
         return(-1)
 
-        ## HAZARDOUS QUALITY ##
+
+### FUNCTION TO SOLVE THE USER'S INPUT OF NO_2 CONCENTRATION ###
+def NO_2_calc(C_p):
+    global quality
+    ## HAZARDOUS QUALITY ##
     if 1250 <= NO_2 <= 2049:
-        quality = 'Hazardous'
-        return (NO_2_constant(C_p))
+        quality = "Hazardous"
+        return formula(2049 , 1250 , 301 , 500 , C_p)
 
         ## VERY UNHEALTHY QUALITY ##
     elif 650 <= NO_2 <= 1249:
         quality = 'Very Unhealthy'
-        return (NO_2_constant(C_p))
+        return formula(1249 , 650 , 201 , 300 , C_p)
 
-            ## UNHEALTHY QUALITY ##
+        ## UNHEALTHY QUALITY ##
     elif 361 <= NO_2 <= 649:
         quality = 'Unhealthy'
-        return (NO_2_constant(C_p))
+        return formula(649 , 361 , 151 , 200 , C_p)
 
         ## UNHEALTHY FOR SENSITIVE GROUPS QUALITY ##
     elif 101 <= NO_2 <= 360:
-        quality = 'Unhealthy For Sensitive Groups'
-        return (NO_2_constant(C_p))
+        quality = 'Unhealthy for Sensitive Groups'
+        return formula(360 , 101 , 101 , 150 , C_p)
 
         ## MODERATE QUALITY ##
     elif 54 <= NO_2 <= 100:
         quality = 'Moderate'
-        return (NO_2_constant(C_p))
+        return formula(100 , 54 , 51 , 100 , C_p)
 
         ## GOOD QUALITY ##
     elif 0 <= NO_2 <= 53:
         quality = 'Good'
-        return (NO_2_constant(C_p))
+        return formula (53 , 0 , 0 , 50 , C_p)
+
+    elif NO_2 < 0:
+        return -1
 
 
+### FUNCTION TO SOLVE THE USER'S INPUT OF SO CONCENTRATION ###
 def SO_calc(C_p):
 
     global quality
 
     if SO < 0:
-        return(-1)
+        return -1
 
-        ## HAZARDOUS QUALITY ##
-    if 605 <= SO <= 1004:
-        quality = 'Hazardous'
-        return (SO_constant(C_p))
-
-        ## VERY UNHEALTHY QUALITY ##
-    elif 305 <= SO <= 604:
-        quality = 'Very Unhealthy'
-        return (SO_constant(C_p))
-
-            ## UNHEALTHY QUALITY ##
-    elif 186 <= SO <= 304:
-        quality = 'Unhealthy'
-        return (SO_constant(C_p))
-
-        ## UNHEALTHY FOR SENSITIVE GROUPS QUALITY ##
-    elif 76 <= SO <= 185:
-        quality = 'Unhealthy For Sensitive Groups'
-        return (SO_constant(C_p))
-
-        ## MODERATE QUALITY ##
-    elif 36 <= SO <= 75:
-        quality = 'Moderate'
-        return (SO_constant(C_p))
-
-        ## GOOD QUALITY ##
+    ## GOOD QUALITY ##
     elif 0 <= SO <= 35:
         quality = 'Good'
-        return (SO_constant(C_p))
+        return formula(35 , 0 , 0 , 50 , C_p)
 
+    ## MODERATE QUALITY ##
+    elif 36 <= SO <= 75:
+        quality = 'Moderate'
+        return formula(75 , 36 , 51 , 100 , C_p)
+
+    ## UNHEALTHY FOR SENSITIVE GROUPS QUALITY ##
+    elif 76 <= SO <= 185:
+        quality = 'Unhealthy for Sensitive Groups'
+        return formula(185 , 76 , 101 , 150 ,C_p)
+
+    ## UNHEALTHY QUALITY ##
+    elif 186 <= SO <= 304:
+        quality = 'Unhealthy'
+        return formula(304 , 186 , 151 , 200 , C_p)
+
+    ## VERY UNHEALTHY QUALITY ##
+    elif 305 <= SO <= 604:
+        quality = 'Very Unhealthy'
+        return formula(604 , 305 , 201 , 300 , C_p)
+
+    ## HAZARDOUS ##
+    elif 605 <= SO <= 1004:
+        quality = 'Hazardous'
+        return formula(1004 , 605 , 301 , 500 , C_p)
+
+
+### FUNCTION TO SOLVE THE USER'S INPUT OF CO CONCENTRATION ###
 def CO_calc(C_p):
-
     global quality
 
-    if CO < 0:
-        return (-1)
+    ## GOOD QUALITY ##
+    if 0 <= CO <= 4.4:
+        quality = 'Good'
+        return formula(4.4 , 0 , 0 , 50 , C_p)
 
-        ## HAZARDOUS QUALITY ##
-    if 30.5 <= CO <= 50.4:
-        quality = 'Hazardous'
-        return (CO_constant(C_p))
-
-        ## VERY UNHEALTHY QUALITY ##
-    elif 15.5 <= CO <= 30.4:
-        quality = 'Very Unhealthy'
-        return (CO_constant(C_p))
-
-            ## UNHEALTHY QUALITY ##
-    elif 12.5 <= CO <= 15.4:
-        quality = 'Unhealthy'
-        return (CO_constant(C_p))
-
-        ## UNHEALTHY FOR SENSITIVE GROUPS QUALITY ##
-    elif 9.5 <= CO <= 12.4:
-        quality = 'Unhealthy For Sensitive Groups'
-        return (CO_constant(C_p))
-
-        ## MODERATE QUALITY ##
+    ## MODERATE QUALITY ##
     elif 4.5 <= CO <= 9.4:
         quality = 'Moderate'
-        return (CO_constant(C_p))
+        return formula(9.4 , 4.5 , 51 , 100 , C_p)
 
-        ## GOOD QUALITY ##
-    elif 0 <= CO <= 4.4:
-        quality = 'Good'
-        return (CO_constant(C_p))
+    ## UNHEALTHY FOR SENSITIVE GROUPS QUALITY ##
+    elif 9.5 <= CO <= 12.4:
+        quality = 'Unhealthy for Sensitive Groups'
+        return formula( 12.4 , 9.5 , 101 , 150 , C_p)
 
+    ## UNHEALTHY QUALITY ##
+    elif 12.5 <= CO <= 15.4:
+        quality = 'Unhealthy'
+        return formula( 15.4 , 12.5 , 151 , 200 , C_p)
+
+    ## VERY UNHEALTHY QUALITY ##
+    elif 15.5 <= CO <= 30.4:
+        quality = 'Very Unhealthy'
+        return formula ( 30.4 , 15.5 , 201 , 300 , C_p)
+
+    ## HAZARDOUS QUALITY ##
+    elif 30.5 <= CO <= 50.4:
+        quality = 'Hazardous'
+        return formula ( 50.4 , 30.5 , 301 , 500 , C_p)
+
+    elif CO < 0:
+        return -1
+
+
+### FUNCTION TO SOLVE THE USER'S INPUT OF O_3 CONCENTRAION ###
 def O_3_calc(C_p):
 
     global quality
+    ## GOOD AND MODERATE QUALITY ##
+    if O_3 <= 124:
+        return -1
 
-    if O_3 < 0:
-        return(-1)
+    #UNHEALTHY FOR SENSITIVE GROUPS QUALITY ##
+    elif 125 <= O_3 <= 164:
+        quality = 'Unhealthy for Sensitive Groups'
+        return formula(164 , 125 , 101 , 150 , C_p)
 
-    ## HAZARDOUS QUALITY ##
-    if 405 <= O_3 <= 604:
-        quality = 'Hazardous'
-        return (O_3_constant(C_p))
-
-        ## VERY UNHEALTHY QUALITY ##
-    elif 205 <= O_3 <= 404:
-        quality = 'Very Unhealthy'
-        return (O_3_constant(C_p))
-
-        ## UNHEALTHY QUALITY ##
+    ## UNHEALTHY QUALITY ##
     elif 165 <= O_3 <= 204:
         quality = 'Unhealthy'
-        return (O_3_constant(C_p))
+        return formula (204 , 165 , 151 , 200 , C_p )
 
-        ## UNHEALTHY FOR SENSITIVE GROUPS QUALITY ##
-    elif 125 <= O_3 <= 164:
-        quality = 'Unhealthy For Sensitive Groups'
-        return (O_3_constant(C_p))
+    # VERY UNHEALTHY QUALITY ##
+    elif 205 <= O_3 <= 404:
+        quality = 'Very Unhealthy'
+        return formula (404 , 205 , 201 , 300 , C_p)
 
-    elif O_3 < 125:
-        return(-1)
+    ## HAZARDOUS QUALITY ##
+    elif 405 <= O_3 <= 604:
+        quality = 'Hazardous'
+        return formula ( 604 , 405 , 301 , 500 , C_p)
 
-### FORMULA TO FIND THE MAXIMUM VALUE OF THE AQI ###
 
-def Max(a , b , c , d , e , f):
+### FORMULA TO FIND THE MAXIMUM VALUE OF THE AQI GIVEN THE CONCENTRATION ###
+def Max (PM_25 , PM_10 , NO_2 , SO , CO , O_3):
 
-    Max = a
-    PM_25_calc(PM_25)
+    max_list = [PM_25 , PM_10 , NO_2 , SO , CO , O_3]
+    Max = 0
+    c = 0
+        ### GOES THROUGH THE MAX_LIST TO FIND WHICH VALUE IS THE HIGHEST ###
+    for i in max_list:
 
-    if b > Max:
-        Max = b
+        if i > Max or c == 0:
+            Max = i
+        c += 1
+
+        ### CHECKS TO SEE IF THE MAX VALUES == ONE OF THE ARGUMENTS AND SETS THE QUALITY BASED ON THE CALCULATION ###
+    if Max == PM_25:
+        PM_25_calc(PM_25)
+
+    elif Max == PM_10:
         PM_10_calc(PM_10)
 
-    elif c > Max:
-        Max = c
+    elif Max == NO_2:
         NO_2_calc(NO_2)
 
-    elif d > Max:
-        Max = d
+    elif Max == SO:
         SO_calc(SO)
 
-    elif e > Max:
-        Max = e
+    elif Max == CO:
         CO_calc(CO)
 
-    elif f > Max:
-        Max = f
+    elif Max == O_3:
         O_3_calc(O_3)
+
 
     return Max
 
-### TRUNCATE ###
-def truncate(f):
-    return math.floor(f * 10 ** 1) / 10 ** 1
+
+### TRUNCATE FUNCTION TO TRUNCATE THE VALUE OF PM 2.5 AND CO TO THE NEAREST DECIMAL###
+def truncate(value):
+    return math.floor(value * 10 ** 1) / 10 ** 1
 
 
 
+### ASKS USER FOR NUMBER OF LOCATIONS AND PERFORMS AN INPUT VALIDATION IN CASE THEY INPUT AN INSUFFICIENT AMOUNT OF LOCATIONS ###
 user_input = int(input('Air Quality Index Calculator' + '\nHow many locations for this report? ')) # INPUT 1 #
 
 while user_input <= 0:
     user_input = int(input('How many locations for this report? ')) # INPUT 2 #
 
 
+
+### LOOP THAT SOLVES THE CONCENTRATION VALUES AND OUTPUTS THE MAX AIR QUALITY ###
+
 for i in range (1 , user_input + 1):
 
-    max = 0
 
     name = input(f'What is the name of Location {i}? ') # INPUT 3 #
 
+    ### INPUT FOR CONCENTRATION OF PM2.5 ###
     PM_25 = float(input(' -> Enter PM-2.5 concentration: ')) # INPUT 4 #
-    if PM_25_calc(PM_25) < 0:
-        pass
+
+    if PM_25 >= 0:
+        PM25_counter += PM_25
+        count += 1
+        # print(f'Counter: {PM25_counter} Count: {count}')
 
     else:
-        print(f'\tPM-2.5 concentration of {truncate(PM_25)}' + f'is index level {PM_25_calc(PM_25)}') # PRINT 1 #
+        count -= 1
+        # print(f'Counter: {PM25_counter} Count: {count}')
+
+
+    if PM_25_calc(PM_25) < 0:
+        PM_25_max = PM_25_calc(PM_25)
+
+    else:
+        print(f'\tPM-2.5 concentration of {truncate(PM_25)}' + f' is index level {PM_25_calc(PM_25)}') # PRINT 1 #
         PM_25_max = PM_25_calc(PM_25)
 
 
+
+
+
+    ### INPUT FOR CONCENTRATION OF PM10 ###
     PM_10 = math.floor(float(input(' -> Enter PM-10 concentration: '))) # INPUT 5 #
     if PM_10_calc(PM_10) < 0:
-        pass
+        PM_10_max = PM_10_calc(PM_10)
     else:
         print(f'\tPM-10 concentration of {PM_10} is index level {PM_10_calc(PM_10)}') # PRINT 2 #
         PM_10_max = PM_10_calc(PM_10)
 
 
+
+    ### INPUT FOR CONCENTRATION OF NO_2 ###
     NO_2 = math.floor(float(input(' -> Enter NO-2 concentration: '))) # INPUT 6 #
     if NO_2_calc(NO_2) < 0:
-        pass
+        NO_2_max = NO_2_calc(NO_2)
     else:
         print(f'\tNO-2 concentration of {NO_2} is index level {NO_2_calc(NO_2)}') # PRINT 3 #
         NO_2_max = NO_2_calc(NO_2)
 
 
+
+    ### INPUT FOR CONCENTRATION OF SO ###
     SO = math.floor(float(input(' -> Enter SO-2 concentration: '))) # INPUT 7 #
     if SO_calc(SO) < 0:
-        pass
+        SO_2_max = SO_calc(SO)
     else:
         print(f'\tSO-2 concentration of {SO} is index level {SO_calc(SO)}') # PRINT 4 #
         SO_2_max = SO_calc(SO)
 
 
+
+    ### INPUT FOR CONCENTRATION OF CO ###
     CO = float(input(' -> Enter CO concentration: ')) # INPUT 8 #
     if CO_calc(CO) < 0:
-        pass
+        CO_max = CO_calc(CO)
     else:
         print(f'\tCO concentration of {truncate(CO)} is index level {CO_calc(CO)}') # PRINT 5 #
         CO_max = CO_calc(CO)
 
+
+
+    ### INPUT FOR CONCENTRATION OF O_3 ###
     O_3 = math.floor(float(input(' -> Enter O3 concentration: '))) # INPUT 9 #
-    if SO_calc(SO) < 125:
-        pass
+    if O_3_calc(O_3) < 125:
+        O_3_max = O_3_calc(O_3)
+
     else:
         print(f'\tO3 concentration of {O_3} is index level {O_3_calc(O_3)}') # PRINT 6 #
         O_3_max = O_3_calc(O_3)
 
-    print(f'\nAQI for {name} is {Max(PM_25_max , PM_10_max, NO_2_max , SO_2_max , CO , O_3)}') # PRINT 7 #
+
+    ### PRINTS THE AQUI FOR A LOCATION AND GIVES THE AIR QUALITY FOR SAID LOCATION ###
+    print(f'\nAQI for {name} is {Max(PM_25_max , PM_10_max, NO_2_max , SO_2_max , CO_max , O_3_max)}') # PRINT 7 #
     print(f"Air Quality: {quality}\n") # PRINT 8 #
 
+
+    ### LIST TO HELP SOLVE FOR THE OVERALL SUMMARY OF THE LOCATIONS ###
+    name_list.append(name)
+
+    max_value.append(Max(PM_25_max , PM_10_max, NO_2_max , SO_2_max , CO_max , O_3_max))
+
+
+### SOLVES FOR THE MAX VALUE BETWEEN ALL LOCATIONS ###
+for j in max_value:
+    if j > max:
+        max = j
+
+
+PM25_avg = PM25_counter / (count)
+
+
+if PM25_avg < 0:
+    print(f'Summary:\n\tLocation with the highest AQI is {name} ({max})') # PRINT 9 #
+
+else:
+    print(f'Summary:\n\tLocation with the highest AQI is {name} ({max})' + f'\nAverage PM-2.5 concentration: {truncate(PM25_avg)}') # PRINT 10 #
