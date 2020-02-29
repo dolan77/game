@@ -1,17 +1,17 @@
 import math
 
-I_high = 0
-I_low = 0
-C_high = -1
-C_low = -2
-C_p = 0
-count = 1
-Ip = ((I_high - I_low) / (C_high - C_low)) * (C_p - C_low) + I_low
-PM_10 = -1
-PM_25 = -1
-NO_2 = -1
-max = 0
-quality = 0
+# I_high = 0
+# I_low = 0
+# C_high = -1
+# C_low = -2
+# C_p = 0
+# count = 1
+# Ip = ((I_high - I_low) / (C_high - C_low)) * (C_p - C_low) + I_low
+# PM_10 = -1
+# PM_25 = -1
+# NO_2 = -1
+# max = 0
+# quality = 0
 
 def PM_25_constant(C_p):
 
